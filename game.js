@@ -26,20 +26,24 @@ window.addEventListener("load", function() {
             });
 
             this.add('platformerControls, animation');
-            this.play("default");
+            this.play("left");
         },
         step: function (dt) {
             if (Q.inputs['left']) {
                 this.p.x -= this.p.speed;
+                this.play("left");
             }
             else if (Q.inputs['right']) {
                 this.p.x += this.p.speed;
+                this.play("right");
             }
             else if (Q.inputs['up']) {
                 this.p.y -= this.p.speed;
+                this.play("up");
             }
             else if (Q.inputs['down']) {
                 this.p.y += this.p.speed;
+                this.play("down");
             }
         }
     });
@@ -54,7 +58,12 @@ window.addEventListener("load", function() {
 
     Q.load(["water.png", "ship.png", "ship.json"], function () {
         Q.compileSheets("ship.png", "ship.json");
-        Q.animations("ship", { default: { frames: [0,1,2,3], rate: 1 / 4 } });
+        Q.animations("ship", {
+            left: { frames: [4,5,6,7], rate: 1 / 4 },
+            right: { frames: [8,9,10,11], rate: 1 / 4 },
+            up: { frames: [12,13,14,15], rate: 1 / 4 },
+            down: { frames: [0,1,2,3], rate: 1 / 4 },
+        });
 
         Q.stageScene("sea");
     });
