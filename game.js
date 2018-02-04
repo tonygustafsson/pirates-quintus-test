@@ -1,7 +1,7 @@
 window.addEventListener("load", function() {
     // Setup
     var Q = Quintus()
-            .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
+            .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, TMX")
             .setup({ maximize: true })
             .touch();
 
@@ -55,12 +55,10 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Island1", {
         init: function (p) {
             this._super(p, {
-                sprite: "island1",
-                sheet: "island1",
-                x: Q.el.width + 300,
+                asset: "island1.png",
+                x: Q.el.width + 600,
                 y: Q.el.height,
-                type: Q.SPRITE_FRIENDLY,
-                speed: 0,
+                collisionMask: 1,
             });
         }});
 
@@ -69,7 +67,8 @@ window.addEventListener("load", function() {
     Q.scene("sea", function (stage) {
         Q.gravity = 0;
         stage.insert(new Q.Repeater({ asset: "water.png", speedX: 0.5, speedY: 0.5 }));
-        stage.insert(new Q.Island1());
+        Q.stageTMX("ocean.tmx", stage);
+        //stage.insert(new Q.Island1());
         
         var ship = stage.insert(new Q.Ship());
         stage.add("viewport").follow(ship);
@@ -77,9 +76,8 @@ window.addEventListener("load", function() {
 
 
     // On load
-    Q.load(["water.png", "ship.png", "ship.json", "island1.png", "island1.json"], function () {
+    Q.loadTMX(["water.png", "ship.png", "ship.json", "island1.png", "world.tsx", "ocean.tmx"], function () {
         Q.compileSheets("ship.png", "ship.json");
-        Q.compileSheets("island1.png", "island.json");
 
         Q.animations("ship", {
             left: { frames: [4,5,6,7], rate: 1 / 4 },
