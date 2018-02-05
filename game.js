@@ -76,7 +76,7 @@ window.addEventListener("load", function() {
 
 
     // On load
-    Q.loadTMX(["water.png", "ship.png", "ship.json", "island1.png", "world.tsx", "ocean.tmx"], function () {
+    Q.loadTMX(["water.png", "ship.png", "ship.json", "island1.png", "ocean.tmx"], function () {
         Q.compileSheets("ship.png", "ship.json");
 
         Q.animations("ship", {
